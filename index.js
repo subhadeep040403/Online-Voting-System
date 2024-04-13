@@ -28,39 +28,39 @@ const authorizeUser = (req, res, next) => {
 
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/html/login.html'));
+  res.sendFile(path.join(__dirname, 'login.html'));
 });
 
-app.get('/js/login.js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/js/login.js'))
+app.get('login.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.js'))
 });
 
-app.get('/css/login.css', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/css/login.css'))
+app.get('login.css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.css'))
 });
 
-app.get('/css/index.css', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/css/index.css'))
+app.get('index.css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.css'))
 });
 
-app.get('/css/admin.css', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/css/admin.css'))
+app.get('admin.css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.css'))
 });
 
 app.get('/assets/eth5.jpg', (req, res) => {
   res.sendFile(path.join(__dirname, 'src/assets/eth5.jpg'))
 });
 
-app.get('/js/app.js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/js/app.js'))
+app.get('app.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'app.js'))
 });
 
 app.get('/admin.html', authorizeUser, (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/html/admin.html'));
+  res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
 app.get('/index.html', authorizeUser, (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/html/index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/dist/login.bundle.js', (req, res) => {
