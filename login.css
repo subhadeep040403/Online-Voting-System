@@ -7,7 +7,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 90vh;
-    background: url('https://img.freepik.com/free-vector/grungy-style-indian-general-election-banner-celebrate-democracy_1017-50087.jpg') no-repeat center center fixed;
+    background: url(https://img.freepik.com/free-vector/grungy-style-indian-general-election-banner-celebrate-democracy_1017-50087.jpg) no-repeat center center fixed;
     background-size: cover;
   }
   
