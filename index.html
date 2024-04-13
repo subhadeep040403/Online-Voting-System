@@ -1,52 +1,219 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Voting Page</title>
 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0">
+	<title>Online Voting</title>
     <link rel="stylesheet" href="index.css">
-    
-  </head>
-  <body>
-    <div id="head" class="text-center">
-      <h1 align="center">Online Voting System</h1>
-      <h2 align="center">Welcome for Voting</h2> 
-      <h3 align="center"><p>Voting Dates: <span id="dates"></span></p></h3>
-      <br/> 
-      <a href="admin.html"><h1>Admin</h1></a>
-      <br/>
-      <a href="login.html"><h1>Login</h1></a>
-      <br/>
-    </div>
-    <div id="candidate" class="container"> 
-      <table class="table text-center">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Party</th>
-            <th>Total Vote</th>
-          </tr>
-        </thead>
-        <tbody id="boxCandidate"></tbody>
-      </table>
-      <br/>
-      <div id="vote">
-        <p>Please select one of the candidates and click the vote button.</p>
-        <button id="voteButton" class="btn btn-primary" onclick="app.vote()" disabled>Vote</button>
-        <div id="msg"></div>
-  
-        <div id="vote-box"></div>
-      </div>
-    </div>
-  
-    <div id="account">
-          <p id="accountAddress" class="text-center"></p>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-  <script src="app.bundle.js" type="module"></script>
-  </body>
+	<link href=
+"https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+		rel="stylesheet">
+	<script src=
+"https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js">
+	</script>
+    <style>
+        body 
+        {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        * 
+        {
+            box-sizing: border-box;
+        }
+        h1 
+        {
+            text-align:center;
+            color:rgb(10, 53, 245);
+            -webkit-text-stroke: 1px black;
+        }
+        .bag 
+        {
+            background-image: url(https://cdn.vectorstock.com/i/1000x1000/97/16/map-of-india-with-voting-hand-design-vector-24469716.webp);
+            background-color: rgb(43, 165, 226);
+            height: 1500px;
+            background-size: cover;
+        }
+        label
+        {
+            color: rgb(0, 0, 0);
+            font-size:26px;
+            -webkit-text-stroke: 1px black;
+        }
+        b 
+        {
+            color: rgb(0, 53, 128);
+            font-size:26px;
+            -webkit-text-stroke: 1px black;
+        }
+        input[type=text],
+        input[type=password] 
+        {
+            width: 50%;
+            padding: 20px;
+            margin: 15px 0px;
+            border: 2px solid rgb(128, 0, 109);
+            align-content: center;
+        }
+        input[type=radio],
+        input[type=checkbox] 
+        {
+            width: 10%;
+            padding: 20px;
+            margin: 15px 0px;
+            border: 2px solid rgb(128, 0, 109);
+            align-content: center;
+        }
+        .button 
+        {
+            background-color: rgb(249, 145, 8);
+            color: white;
+            padding: 16px 16px;
+            border: none;
+            cursor: pointer;
+            width: 50%;
+        }
+        .button:hover 
+        {
+            transform: scale(1.1);
+            transition: transform 0.3s;
+        }
+    </style>
+</head>
+
+<body class="bg-red-100 h-screen flex 
+			flex-col justify-center items-center">
+	<div class="bg-blue-50 p-8 rounded-lg shadow-md w-full 
+				md:w-1/2 lg:w-1/3 border-2 border-green-600">
+		<h1 class="text-3xl font-bold text-center mb-8">
+			Online Voting
+		</h1>
+		<div class="flex flex-col mb-4">
+			<label for="color" class="text-lg font-semibold mb-2">
+				Select Color:
+			</label>
+			<select id="color"
+					class="border border-gray-300 rounded-md 
+						py-2 px-3 focus:outline-none">
+				<option value="A">A</option>
+				<option value="B">B</option>
+				<option value="C">C</option>
+				<option value="D">D</option>
+                <option value="E">E</option>
+				<option value="F">F</option>
+				<option value="G">G</option>
+				<option value="H">H</option>
+			</select>
+		</div>
+		<button id="voteButton"
+				class="bg-green-500 text-white px-6 py-2 
+					rounded-md self-center mt-4 focus:outline-none">
+			Vote
+		</button>
+		<button id="clearButton"
+			class="bg-red-500 text-white px-6 py-2 
+				rounded-md self-center mt-2 focus:outline-none">
+			Clear Votes
+		</button>
+		<button id="pieChartButton"
+			class="bg-purple-500 text-white px-6 py-2 
+				rounded-md self-center mt-2 focus:outline-none">
+			Pie Chart
+		</button>
+		<div id="result" class="mt-8"></div>
+		<div id="votes" class="mt-8">
+			<h2 class="text-xl font-semibold mb-4">
+				Voted List:
+			</h2>
+		</div>
+		<div class="w-64 h-64 mx-auto">
+			<canvas id="pieChart"></canvas>
+		</div>
+	</div>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const colorDropdown = document.getElementById('color');
+			const voteButton = document.getElementById('voteButton');
+			const clearButton = document.getElementById('clearButton');
+			const pieChartButton = document.getElementById('pieChartButton');
+			const resultMessage = document.getElementById('result');
+			const votedList = document.getElementById('votes');
+			let myChart;
+			voteButton.addEventListener('click', function () {
+				const selectedColor = colorDropdown.value;
+				let colorVotes = JSON.parse(localStorage
+												.getItem('colorVotes')) || {};
+				colorVotes[selectedColor] = (colorVotes[selectedColor] || 0)+1;
+				localStorage.setItem('colorVotes', JSON.stringify(colorVotes));
+				resultMessage.textContent = `You voted for 
+											${selectedColor} House.`;
+				displayVotes();
+			});
+			clearButton.addEventListener('click', function () {
+				localStorage.removeItem('colorVotes');
+				resultMessage.textContent = 'All votes cleared.';
+				displayVotes();
+				if (myChart) {
+					myChart.destroy();
+				}
+			});
+			pieChartButton.addEventListener('click', function () {
+				const colorVotes = JSON.parse(localStorage
+													.getItem('colorVotes')) || {};
+				const colors = Object.keys(colorVotes);
+				const votes = Object.values(colorVotes);
+				if (myChart) {
+					myChart.destroy();
+				}
+				const ctx = document.getElementById('pieChart')
+									.getContext('2d');
+				myChart = new Chart(ctx, {
+					type: 'pie',
+					data: {
+						labels: colors,
+						datasets: [{
+							label: 'Votes',
+							data: votes,
+							backgroundColor: [
+								'rgb(255, 99, 132)',
+								'rgb(54, 162, 235)',
+								'rgb(255, 205, 86)',
+								'rgb(75, 192, 192)',
+                                'rgb(250, 119, 132)',
+								'rgb(234, 162, 225)',
+								'rgb(155, 235, 186)',
+								'rgb(175, 122, 132)',
+							],
+							hoverOffset: 8
+						}]
+					},
+					options: {
+						plugins: {
+							title: {
+								display: true,
+								text: 'Voting Results'
+							}
+						}
+					}
+				});
+			});
+			function displayVotes() {
+				votedList.innerHTML = '';
+				const colorVotes = JSON.parse(localStorage
+											.getItem('colorVotes')) || {};
+				for (const color in colorVotes) {
+					const voteItem = document.createElement('li');
+					voteItem.textContent = `${color} House: 
+											${colorVotes[color]}`;
+					votedList.appendChild(voteItem);
+				}
+			}
+			displayVotes();
+		});
+	</script>
+</body>
+
 </html>
