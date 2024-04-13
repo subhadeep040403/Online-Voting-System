@@ -207,7 +207,7 @@
 											.getItem('colorVotes')) || {};
 				for (const color in colorVotes) {
 					const voteItem = document.createElement('li');
-					voteItem.textContent = `${color} Candidate: 
+					voteItem.textContent = `Candidate ${color}: 
 											${colorVotes[color]}`;
 					votedList.appendChild(voteItem);
 				}
